@@ -1,0 +1,665 @@
+!(function o(t, a, l) {
+  function n(s, e) {
+    if (!a[s]) {
+      if (!t[s]) {
+        var r = "function" == typeof require && require;
+        if (!e && r) return r(s, !0);
+        if (i) return i(s, !0);
+        throw (
+          (((e = new Error("Cannot find module '" + s + "'")).code =
+            "MODULE_NOT_FOUND"),
+          e)
+        );
+      }
+      (r = a[s] = { exports: {} }),
+        t[s][0].call(
+          r.exports,
+          function (e) {
+            return n(t[s][1][e] || e);
+          },
+          r,
+          r.exports,
+          o,
+          t,
+          a,
+          l
+        );
+    }
+    return a[s].exports;
+  }
+  for (
+    var i = "function" == typeof require && require, e = 0;
+    e < l.length;
+    e++
+  )
+    n(l[e]);
+  return n;
+})(
+  {
+    1: [
+      function (e, s, r) {
+        "use strict";
+        var o = "now";
+        function t(e, s) {
+          (s = s || window.location.href), (e = e.replace(/[\[\]]/g, "\\$&"));
+          e = new RegExp("[?&]" + e + "(=([^&#]*)|&|#|$)").exec(s);
+          return e
+            ? e[2]
+              ? decodeURIComponent(e[2].replace(/\+/g, " "))
+              : ""
+            : null;
+        }
+        function a() {
+          $(".js-change").removeClass("js-visible"),
+            $(".js-change.".concat(o)).addClass("js-visible"),
+            $(".js-change__class").removeClass("now").removeClass("past"),
+            $(".js-change__class").addClass(o);
+        }
+        t("year") &&
+          ((o = t("year")),
+          $(".chara-sub--btn").removeClass("js-current"),
+          $(".chara-sub--btn.".concat(o)).addClass("js-current"),
+          a()),
+          $(".chara-sub--btn").on("click", function (e) {
+            e.preventDefault(),
+              (o = $(this).data("year")),
+              $(".chara-sub--btn").removeClass("js-current"),
+              $(this).addClass("js-current"),
+              $(".js-change__show").addClass("js-hide"),
+              setTimeout(function () {
+                a();
+              }, 600),
+              setTimeout(function () {
+                $(".js-change__show").removeClass("js-hide");
+              }, 800);
+          });
+      },
+      {},
+    ],
+    2: [
+      function (e, s, r) {
+        "use strict";
+        $(function () {
+          var e;
+          $(window).on("load resize", function () {
+            $(window).width() <= 767
+              ? (e =
+                  e ||
+                  new Swiper(".chara-card--slide", {
+                    slidesPerView: 1.2,
+                    centeredSlides: !0,
+                    loop: !0,
+                    spaceBetween: "5%",
+                    autoplay: { delay: 5e3, disableOnInteraction: !1 },
+                    pagination: {
+                      el: ".swiper-pagination",
+                      type: "bullets",
+                      clickable: !0,
+                    },
+                  }))
+              : e && (e.destroy(), (e = void 0));
+          });
+        });
+      },
+      {},
+    ],
+    3: [
+      function (e, s, r) {
+        "use strict";
+        $(document).on("click", ".js-acd-btn", function (e) {
+          e.preventDefault(),
+            $(this).toggleClass("is-open"),
+            $(this).parent(".js-acd-contents").toggleClass("omit");
+        }),
+          $(function () {
+            $(".js-acd-tit")
+              .click(function () {
+                $(this).toggleClass("is-open"), $(this).next().slideToggle();
+              })
+              .next()
+              .hide();
+          });
+      },
+      {},
+    ],
+    4: [
+      function (e, s, r) {
+        "use strict";
+        var o;
+        $(window).on("scroll", function () {
+          o = $(window).scrollTop();
+          var e = $(".layer-1 .container--bg-parallax__layer"),
+            s = $(".layer-2 .container--bg-parallax__layer"),
+            r = $(".layer-3 .container--bg-parallax__layer");
+          e.css("transform", "translateY(" + -1.2 * o + "px)"),
+            s.css("transform", "translateY(" + -1 * o + "px)"),
+            r.css("transform", "translateY(" + -0.4 * o + "px)");
+        });
+      },
+      {},
+    ],
+    5: [
+      function (e, s, r) {
+        "use strict";
+        $(function () {
+          var e = document.getElementsByTagName("body")[0],
+            s = 0;
+          $(".header--btn, .header--nav-bg").on("click", function () {
+            $(".header--btn, .header--nav").toggleClass("js-open"),
+              $(".container, .header--logo").toggleClass("js-blur"),
+              e.classList.contains("js-no-scroll")
+                ? ((e.style.top = ""),
+                  e.classList.remove("js-no-scroll"),
+                  window.scrollTo(0, s))
+                : ((s = window.scrollY),
+                  (e.style.top = -1 * s + "px"),
+                  e.classList.add("js-no-scroll"));
+          }),
+            $(".sort-btn").on("click", function () {
+              $(".sort-btn, .sort-menu").toggleClass("js-open");
+            });
+        });
+      },
+      {},
+    ],
+    6: [
+      function (e, s, r) {
+        "use strict";
+        var o = $.cookie("visit");
+        $(window).on("load", function () {
+          var e, s, r;
+          $("html").hasClass("top")
+            ? o
+              ? ($(".top-mv--bg-video").addClass("js-hide"),
+                $(".js-top").addClass("js-show"),
+                setTimeout(function () {
+                  $(".loading").addClass("js-loaded");
+                }, 1200))
+              : ($.cookie("visit", !0),
+                (o = !1),
+                (e = document.querySelector("#js-video-pc")),
+                (s = document.querySelector("#js-video-sp")),
+                (r = 768 <= window.innerWidth ? e : s).load(),
+                r.addEventListener("loadeddata", function () {
+                  $(".loading").addClass("js-loaded"),
+                    r.play(),
+                    r.addEventListener("ended", function () {
+                      $(".top-mv--bg-video").addClass("js-hide"),
+                        $(".js-top").addClass("js-show");
+                    });
+                }))
+            : $(".loading").addClass("js-loaded");
+        });
+      },
+      {},
+    ],
+    7: [
+      function (e, s, r) {
+        "use strict";
+        $(".js-modal-iframe").magnificPopup({
+          type: "iframe",
+          mainClass: "mfp-fade",
+          removalDelay: 200,
+          preloader: !1,
+          closeMarkup:
+            '<button title="閉じる" class="popup-close mfp-close"></button>',
+        }),
+          $(".js-modal-ajax").magnificPopup({
+            type: "ajax",
+            mainClass: "mfp-fade",
+            removalDelay: 200,
+            preloader: !1,
+            modal: !0,
+            closeMarkup:
+              '<button title="閉じる" class="popup-close mfp-close"></button>',
+          }),
+          $(".js-modal-img").magnificPopup({
+            type: "image",
+            mainClass: "mfp-fade",
+            removalDelay: 200,
+            preloader: !1,
+            closeMarkup:
+              '<button title="閉じる" class="popup-close mfp-close"></button>',
+          }),
+          $(".js-modal-gallery-container").magnificPopup({
+            delegate: "a",
+            type: "ajax",
+            mainClass: "mfp-fade",
+            removalDelay: 200,
+            preloader: !1,
+            modal: !0,
+            closeMarkup:
+              '<button title="閉じる" class="popup-close mfp-close mfp-close-gallery"></button>',
+            gallery: { enabled: !0, preload: [1, 1] },
+          }),
+          $(function () {
+            $(document).on("click", 'a[class*="js-modal-"]', function () {
+              $(".header--logo, .header--btn, .container").addClass("js-blur");
+            }),
+              $(document).on("click", ".mfp-close, .mfp-bg", function () {
+                $(".header--logo, .header--btn, .container").removeClass(
+                  "js-blur"
+                );
+              });
+          });
+      },
+      {},
+    ],
+    8: [
+      function (e, s, r) {
+        "use strict";
+        $(window).on("scroll", function () {
+          180 < $(window).scrollTop()
+            ? $(".top-mv--app").addClass("js-show")
+            : $(".top-mv--app").removeClass("js-show");
+        }),
+          $('a[href^="#"]').click(function () {
+            var e = $(this).attr("href"),
+              e = $("#" == e || "" == e ? "html" : e).offset().top;
+            return $("body,html").animate({ scrollTop: e }, 600, "swing"), !1;
+          }),
+          window.addEventListener("scroll", function () {
+            window.pageYOffset;
+            var r = $(window).height(),
+              o = $(window).scrollTop();
+            $(".js-scroll").each(function (e, s) {
+              $(this).offset().top - r + 100 < o && $(this).addClass("js-show");
+            });
+          }),
+          $(window).on("load", function () {
+            var r = $(window).height();
+            $(".js-scroll").each(function (e, s) {
+              $(this).offset().top < (r / 4) * 3 && $(this).addClass("js-show");
+            });
+          });
+      },
+      {},
+    ],
+    9: [
+      function (e, s, r) {
+        "use strict";
+        $(function () {
+          $(".tab-list--btn").on("click", function () {
+            $(".tab-list--btn").removeClass("js-active"),
+              $(this).addClass("js-active"),
+              $(".tab-contents--container").removeClass("js-show"),
+              $(this).addClass("js-show");
+            var e = $(".tab-list--btn").index(this);
+            $(".tab-contents--container").eq(e).addClass("js-show");
+          });
+        });
+      },
+      {},
+    ],
+    10: [
+      function (e, s, r) {
+        "use strict";
+        $(function () {
+          $("#youtube-1, #youtube-2").YTPlayer();
+        });
+      },
+      {},
+    ],
+    11: [
+      function (e, s, r) {
+        "use strict";
+        $(".tag-1.all").on("click", function () {
+          $(".tag-1.all").addClass("js-current"),
+            $(".tag-1.virtualsinger").removeClass("js-current"),
+            $(".tag-1.leoneed").removeClass("js-current"),
+            $(".tag-1.moremore").removeClass("js-current"),
+            $(".tag-1.vivid").removeClass("js-current"),
+            $(".tag-1.wonder").removeClass("js-current"),
+            $(".tag-1.nightcord").removeClass("js-current"),
+            $(".recording-list").addClass("all"),
+            $(".recording-list").removeClass("virtualsinger"),
+            $(".recording-list").removeClass("leoneed"),
+            $(".recording-list").removeClass("moremore"),
+            $(".recording-list").removeClass("vivid"),
+            $(".recording-list").removeClass("wonder"),
+            $(".recording-list").removeClass("nightcord");
+        }),
+          $(".tag-1.virtualsinger").on("click", function () {
+            $(".tag-1.virtualsinger").addClass("js-current"),
+              $(".tag-1.all").removeClass("js-current"),
+              $(".tag-1.leoneed").removeClass("js-current"),
+              $(".tag-1.moremore").removeClass("js-current"),
+              $(".tag-1.vivid").removeClass("js-current"),
+              $(".tag-1.wonder").removeClass("js-current"),
+              $(".tag-1.nightcord").removeClass("js-current"),
+              $(".recording-list").addClass("virtualsinger"),
+              $(".recording-list").removeClass("all"),
+              $(".recording-list").removeClass("leoneed"),
+              $(".recording-list").removeClass("moremore"),
+              $(".recording-list").removeClass("vivid"),
+              $(".recording-list").removeClass("wonder"),
+              $(".recording-list").removeClass("nightcord");
+          }),
+          $(".tag-1.leoneed").on("click", function () {
+            $(".tag-1.leoneed").addClass("js-current"),
+              $(".tag-1.all").removeClass("js-current"),
+              $(".tag-1.virtualsinger").removeClass("js-current"),
+              $(".tag-1.moremore").removeClass("js-current"),
+              $(".tag-1.vivid").removeClass("js-current"),
+              $(".tag-1.wonder").removeClass("js-current"),
+              $(".tag-1.nightcord").removeClass("js-current"),
+              $(".recording-list").addClass("leoneed"),
+              $(".recording-list").removeClass("all"),
+              $(".recording-list").removeClass("virtualsinger"),
+              $(".recording-list").removeClass("moremore"),
+              $(".recording-list").removeClass("vivid"),
+              $(".recording-list").removeClass("wonder"),
+              $(".recording-list").removeClass("nightcord");
+          }),
+          $(".tag-1.moremore").on("click", function () {
+            $(".tag-1.moremore").addClass("js-current"),
+              $(".tag-1.all").removeClass("js-current"),
+              $(".tag-1.virtualsinger").removeClass("js-current"),
+              $(".tag-1.leoneed").removeClass("js-current"),
+              $(".tag-1.vivid").removeClass("js-current"),
+              $(".tag-1.wonder").removeClass("js-current"),
+              $(".tag-1.nightcord").removeClass("js-current"),
+              $(".recording-list").addClass("moremore"),
+              $(".recording-list").removeClass("all"),
+              $(".recording-list").removeClass("virtualsinger"),
+              $(".recording-list").removeClass("leoneed"),
+              $(".recording-list").removeClass("vivid"),
+              $(".recording-list").removeClass("wonder"),
+              $(".recording-list").removeClass("nightcord");
+          }),
+          $(".tag-1.vivid").on("click", function () {
+            $(".tag-1.vivid").addClass("js-current"),
+              $(".tag-1.all").removeClass("js-current"),
+              $(".tag-1.virtualsinger").removeClass("js-current"),
+              $(".tag-1.moremore").removeClass("js-current"),
+              $(".tag-1.leoneed").removeClass("js-current"),
+              $(".tag-1.wonder").removeClass("js-current"),
+              $(".tag-1.nightcord").removeClass("js-current"),
+              $(".recording-list").addClass("vivid"),
+              $(".recording-list").removeClass("all"),
+              $(".recording-list").removeClass("virtualsinger"),
+              $(".recording-list").removeClass("leoneed"),
+              $(".recording-list").removeClass("moremore"),
+              $(".recording-list").removeClass("wonder"),
+              $(".recording-list").removeClass("nightcord");
+          }),
+          $(".tag-1.wonder").on("click", function () {
+            $(".tag-1.wonder").addClass("js-current"),
+              $(".tag-1.all").removeClass("js-current"),
+              $(".tag-1.virtualsinger").removeClass("js-current"),
+              $(".tag-1.moremore").removeClass("js-current"),
+              $(".tag-1.leoneed").removeClass("js-current"),
+              $(".tag-1.vivid").removeClass("js-current"),
+              $(".tag-1.nightcord").removeClass("js-current"),
+              $(".recording-list").addClass("wonder"),
+              $(".recording-list").removeClass("all"),
+              $(".recording-list").removeClass("virtualsinger"),
+              $(".recording-list").removeClass("leoneed"),
+              $(".recording-list").removeClass("vivid"),
+              $(".recording-list").removeClass("moremore"),
+              $(".recording-list").removeClass("nightcord");
+          }),
+          $(".tag-1.nightcord").on("click", function () {
+            $(".tag-1.nightcord").addClass("js-current"),
+              $(".tag-1.all").removeClass("js-current"),
+              $(".tag-1.virtualsinger").removeClass("js-current"),
+              $(".tag-1.moremore").removeClass("js-current"),
+              $(".tag-1.leoneed").removeClass("js-current"),
+              $(".tag-1.wonder").removeClass("js-current"),
+              $(".tag-1.vivid").removeClass("js-current"),
+              $(".recording-list").addClass("nightcord"),
+              $(".recording-list").removeClass("all"),
+              $(".recording-list").removeClass("virtualsinger"),
+              $(".recording-list").removeClass("leoneed"),
+              $(".recording-list").removeClass("vivid"),
+              $(".recording-list").removeClass("moremore"),
+              $(".recording-list").removeClass("wonder");
+          }),
+          $(".tag-2.all").on("click", function () {
+            $(".tag-2.all").addClass("js-current"),
+              $(".tag-2.virtualsinger").removeClass("js-current"),
+              $(".tag-2.leoneed").removeClass("js-current"),
+              $(".tag-2.moremore").removeClass("js-current"),
+              $(".tag-2.vivid").removeClass("js-current"),
+              $(".tag-2.wonder").removeClass("js-current"),
+              $(".tag-2.nightcord").removeClass("js-current"),
+              $(".song-list"+".unit").addClass("all"),
+              $(".song-list"+".unit").removeClass("virtualsinger"),
+              $(".song-list"+".unit").removeClass("leoneed"),
+              $(".song-list"+".unit").removeClass("moremore"),
+              $(".song-list"+".unit").removeClass("vivid"),
+              $(".song-list"+".unit").removeClass("wonder"),
+              $(".song-list"+".unit").removeClass("nightcord");
+          }),
+          $(".tag-2.virtualsinger").on("click", function () {
+            $(".tag-2.virtualsinger").addClass("js-current"),
+              $(".tag-2.all").removeClass("js-current"),
+              $(".tag-2.leoneed").removeClass("js-current"),
+              $(".tag-2.moremore").removeClass("js-current"),
+              $(".tag-2.vivid").removeClass("js-current"),
+              $(".tag-2.wonder").removeClass("js-current"),
+              $(".tag-2.nightcord").removeClass("js-current"),
+              $(".song-list"+".unit").addClass("virtualsinger"),
+              $(".song-list"+".unit").removeClass("all"),
+              $(".song-list"+".unit").removeClass("leoneed"),
+              $(".song-list"+".unit").removeClass("moremore"),
+              $(".song-list"+".unit").removeClass("1vivid"),
+              $(".song-list"+".unit").removeClass("wonder"),
+              $(".song-list"+".unit").removeClass("nightcord");
+          }),
+          $(".tag-2.leoneed").on("click", function () {
+            $(".tag-2.leoneed").addClass("js-current"),
+              $(".tag-2.all").removeClass("js-current"),
+              $(".tag-2.virtualsinger").removeClass("js-current"),
+              $(".tag-2.moremore").removeClass("js-current"),
+              $(".tag-2.vivid").removeClass("js-current"),
+              $(".tag-2.wonder").removeClass("js-current"),
+              $(".tag-2.nightcord").removeClass("js-current"),
+              $(".song-list"+".unit").addClass("leoneed"),
+              $(".song-list"+".unit").removeClass("all"),
+              $(".song-list"+".unit").removeClass("virtualsinger"),
+              $(".song-list"+".unit").removeClass("moremore"),
+              $(".song-list"+".unit").removeClass("vivid"),
+              $(".song-list"+".unit").removeClass("wonder"),
+              $(".song-list"+".unit").removeClass("nightcord");
+          }),
+          $(".tag-2.moremore").on("click", function () {
+            $(".tag-2.moremore").addClass("js-current"),
+              $(".tag-2.all").removeClass("js-current"),
+              $(".tag-2.virtualsinger").removeClass("js-current"),
+              $(".tag-2.leoneed").removeClass("js-current"),
+              $(".tag-2.vivid").removeClass("js-current"),
+              $(".tag-2.wonder").removeClass("js-current"),
+              $(".tag-2.nightcord").removeClass("js-current"),
+              $(".song-list"+".unit").addClass("moremore"),
+              $(".song-list"+".unit").removeClass("all"),
+              $(".song-list"+".unit").removeClass("virtualsinger"),
+              $(".song-list"+".unit").removeClass("leoneed"),
+              $(".song-list"+".unit").removeClass("vivid"),
+              $(".song-list"+".unit").removeClass("wonder"),
+              $(".song-list"+".unit").removeClass("nightcord");
+          }),
+          $(".tag-2.vivid").on("click", function () {
+            $(".tag-2.vivid").addClass("js-current"),
+              $(".tag-2.all").removeClass("js-current"),
+              $(".tag-2.virtualsinger").removeClass("js-current"),
+              $(".tag-2.moremore").removeClass("js-current"),
+              $(".tag-2.leoneed").removeClass("js-current"),
+              $(".tag-2.wonder").removeClass("js-current"),
+              $(".tag-2.nightcord").removeClass("js-current"),
+              $(".song-list"+".unit").addClass("vivid"),
+              $(".song-list"+".unit").removeClass("all"),
+              $(".song-list"+".unit").removeClass("virtualsinger"),
+              $(".song-list"+".unit").removeClass("leoneed"),
+              $(".song-list"+".unit").removeClass("moremore"),
+              $(".song-list"+".unit").removeClass("wonder"),
+              $(".song-list"+".unit").removeClass("nightcord");
+          }),
+          $(".tag-2.wonder").on("click", function () {
+            $(".tag-2.wonder").addClass("js-current"),
+              $(".tag-2.all").removeClass("js-current"),
+              $(".tag-2.virtualsinger").removeClass("js-current"),
+              $(".tag-2.moremore").removeClass("js-current"),
+              $(".tag-2.leoneed").removeClass("js-current"),
+              $(".tag-2.vivid").removeClass("js-current"),
+              $(".tag-2.nightcord").removeClass("js-current"),
+              $(".song-list"+".unit").addClass("wonder"),
+              $(".song-list"+".unit").removeClass("all"),
+              $(".song-list"+".unit").removeClass("virtualsinger"),
+              $(".song-list"+".unit").removeClass("leoneed"),
+              $(".song-list"+".unit").removeClass("vivid"),
+              $(".song-list"+".unit").removeClass("moremore"),
+              $(".song-list"+".unit").removeClass("nightcord");
+          }),
+          $(".tag-2.nightcord").on("click", function () {
+            $(".tag-2.nightcord").addClass("js-current"),
+              $(".tag-2.all").removeClass("js-current"),
+              $(".tag-2.virtualsinger").removeClass("js-current"),
+              $(".tag-2.moremore").removeClass("js-current"),
+              $(".tag-2.leoneed").removeClass("js-current"),
+              $(".tag-2.wonder").removeClass("js-current"),
+              $(".tag-2.vivid").removeClass("js-current"),
+              $(".song-list"+".unit").addClass("nightcord"),
+              $(".song-list"+".unit").removeClass("all"),
+              $(".song-list"+".unit").removeClass("virtualsinger"),
+              $(".song-list"+".unit").removeClass("leoneed"),
+              $(".song-list"+".unit").removeClass("vivid"),
+              $(".song-list"+".unit").removeClass("moremore"),
+              $(".song-list"+".unit").removeClass("wonder");
+          });
+      },
+      {},
+    ],
+    12: [
+      function (e, s, r) {
+        "use strict";
+        function o() {
+          $(".note-list--item,.news-list--item").each(function (e, s) {
+            var r = $(this).data("year"),
+              r = new Date(r).getFullYear(),
+              o = $(this).data("cat"),
+              r = Boolean(r == t || "year-all" == t),
+              o = Boolean(o == a || "cat-all" == a);
+            $(this).removeClass("js-show"),
+              r && o
+                ? ($(this).show(), $(this).addClass("js-show"))
+                : $(this).hide();
+          });
+        }
+        var t = "year-all",
+          a = "cat-all";
+        $(".js-year").on("click", function (e) {
+          e.preventDefault(),
+            $(".js-year").removeClass("is-active"),
+            $(this).addClass("is-active"),
+            (t = $(this).data("year")),
+            o();
+        }),
+          $(".js-cat").on("click", function (e) {
+            e.preventDefault(),
+              $(".js-cat").removeClass("is-active"),
+              $(this).addClass("is-active"),
+              (a = $(this).data("cat")),
+              o();
+          });
+      },
+      {},
+    ],
+    13: [
+      function (e, s, r) {
+        "use strict";
+        e("./common/loading"),
+          e("./common/header"),
+          e("./common/yt"),
+          e("./common/scroll"),
+          e("./common/modal"),
+          e("./common/acd"),
+          e("./common/tab"),
+          e("./common/bg"),
+          e("./top/slider"),
+          e("./top/app"),
+          e("./story/slider"),
+          e("./character/slider"),
+          e("./character/change"),
+          e("./music/tag-sort"),
+          e("./note/cat");
+      },
+      {
+        "./character/change": 1,
+        "./character/slider": 2,
+        "./common/acd": 3,
+        "./common/bg": 4,
+        "./common/header": 5,
+        "./common/loading": 6,
+        "./common/modal": 7,
+        "./common/scroll": 8,
+        "./common/tab": 9,
+        "./common/yt": 10,
+        "./music/tag-sort": 11,
+        "./note/cat": 12,
+        "./story/slider": 14,
+        "./top/app": 15,
+        "./top/slider": 16,
+      },
+    ],
+    14: [
+      function (e, s, r) {
+        "use strict";
+        new Swiper(".keyword-block--slide-list", {
+          slidesPerView: 1,
+          loopedSlides: 5,
+          centeredSlides: !0,
+          loop: !0,
+          autoplay: { delay: 5e3, disableOnInteraction: !1 },
+          pagination: {
+            el: ".swiper-pagination",
+            type: "bullets",
+            clickable: !0,
+          },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+        });
+      },
+      {},
+    ],
+    15: [
+      function (e, s, r) {
+        "use strict";
+        DEVICE.isSp &&
+          (DEVICE.isIos
+            ? $(".top-mv--app-store__btn-item.android")
+            : $(".top-mv--app-store__btn-item.ios")
+          ).addClass("js-hide");
+      },
+      {},
+    ],
+    16: [
+      function (e, s, r) {
+        "use strict";
+        new Swiper(".top-mv--slide-list", {
+          slidesPerView: 1.3,
+          centeredSlides: !0,
+          loop: !0,
+          spaceBetween: "5%",
+          autoplay: { delay: 5e3, disableOnInteraction: !1 },
+          breakpoints: { 769: { slidesPerView: 4.6, spaceBetween: "20%" } },
+          pagination: {
+            el: ".swiper-pagination",
+            type: "bullets",
+            clickable: !0,
+          },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+            disabledClass: "is-disable",
+          },
+        });
+      },
+      {},
+    ],
+  },
+  {},
+  [13]
+);
